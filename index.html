@@ -88,8 +88,8 @@
         const div = document.createElement('div');
         div.className = 'entry';
         div.innerHTML = `
-          <strong>${entry.Name}</strong> logged a <em>${entry.FillMilestone}</em> fill!<br/>
-          📝 “${entry.CommentorVibe || 'No comment'}”
+          <strong>${entry.username}</strong> logged a <em>${entry.SigFill}</em> fill!<br/>
+          📝 “${entry.CommentorVibe || ''}”
         `;
         log.appendChild(div);
       });
