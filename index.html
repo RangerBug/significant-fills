@@ -82,6 +82,8 @@
 
     function showData(data) {
       const log = document.getElementById('log');
+      log.innerHTML = '<h2 style="margin-top: 3rem;">Recent Significant Fills</h2>'; // reset content
+
       const recentFills = data.slice(-10).reverse(); // Show last 10 entries
 
       recentFills.forEach(entry => {
