@@ -76,13 +76,15 @@
     🚰 Stay hydrated. Stay significant.
   </div>
 
+  <!-- ✅ Load Tabletop.js correctly -->
   <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/src/tabletop.min.js"></script>
+
   <script>
     const sheetKey = '2PACX-1vQm1AXCBhTs52i0VZScUL753QK5wC_RmAMWIEygF5bBZHr0TywN1LWzMlvbPCyKtnabLihXOQDpA_GX';
 
     function showData(data) {
       const log = document.getElementById('log');
-      log.innerHTML = '<h2 style="margin-top: 3rem;">Recent Significant Fills</h2>'; // reset content
+      log.innerHTML = '<h2 style="margin-top: 3rem;">Recent Significant Fills</h2>';
 
       const recentFills = data.slice(-10).reverse(); // Show last 10 entries
 
