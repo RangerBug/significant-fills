@@ -85,7 +85,7 @@ function showStats(data) {
   
   statsContainer.innerHTML = `
     <div class="stat-card">
-      <div class="stat-title">Total Fills</div>
+      <div class="stat-title">Total Fills Logged</div>
       <div class="stat-value">${stats.totalFills}</div>
     </div>
     
