@@ -63,6 +63,37 @@
       text-align: left;
       font-size: 1rem;
     }
+
+    #log {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 20px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background-color: #0F1419;
+      margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #log::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #log::-webkit-scrollbar-track {
+      background: #1A1F2A;
+      border-radius: 4px;
+    }
+
+    #log::-webkit-scrollbar-thumb {
+      background: #005288;
+      border-radius: 4px;
+    }
+
+    #log::-webkit-scrollbar-thumb:hover {
+      background: #00395d;
+    }
   
     .footer {
       margin-top: 60px;
@@ -89,8 +120,8 @@
     <button class="button">Submit Your Fill</button>
   </a>
 
+  <h2 style="margin-top: 3rem;">Recent Significant Fills</h2>
   <div id="log">
-    <h2 style="margin-top: 3rem;">Recent Significant Fills</h2>
   </div>
 
   <div class="footer">
@@ -115,15 +146,30 @@
   
     function showData(data) {
       const log = document.getElementById('log');
-      log.innerHTML = '<h2 style="margin-top: 3rem;">Recent Significant Fills</h2>';
+      log.innerHTML = '';
   
-      const recentFills = data.slice(-10).reverse();
-      recentFills.forEach(entry => {
+      // Create a color map for usernames
+      const usernameColors = [
+        '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+        '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+      ];
+      
+      // Get unique usernames and assign colors
+      const uniqueUsernames = [...new Set(data.map(entry => entry.Username))];
+      const colorMap = {};
+      uniqueUsernames.forEach((username, index) => {
+        colorMap[username] = usernameColors[index % usernameColors.length];
+      });
+  
+      const allFills = data.reverse();
+      allFills.forEach(entry => {
         const div = document.createElement('div');
         div.className = 'entry';
+        const userColor = colorMap[entry.Username];
+        div.style.borderLeftColor = userColor;
         div.innerHTML = `
-          <strong>${entry.Username}</strong> filled the <em>${entry.SigFill}</em> bottle!<br/>
-          📝 “${entry.Comments || ''}”
+          <strong style="color: ${userColor}">${entry.Username}</strong> filled the <em>${entry.SigFill}</em> bottle!<br/>
+          📝 "${entry.Comments || ''}"
         `;
         log.appendChild(div);
       });
