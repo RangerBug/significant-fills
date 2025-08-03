@@ -5,7 +5,8 @@ A highly scientific hydration tracker for documenting the most legendary water b
 Built with:
 - Google Forms + Sheets
 - GitHub Pages
-- HTML, JS, and ✨ vibes ✨
+- HTML, JS
+- ✨ vibe coding techniques ✨
 
 ## 🚀 Live Site
 [View Significant Fills](https://rangerbug.github.io/significant-fills/)
