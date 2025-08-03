@@ -10,11 +10,12 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 8vw, 3rem);
   color: #E0E0E0;
   margin-bottom: 0;
   text-transform: uppercase;
   letter-spacing: 2px;
+  line-height: 1.2;
 }
 
 p.subtitle {
