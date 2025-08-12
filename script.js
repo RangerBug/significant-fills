@@ -1,6 +1,24 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQm1AXCBhTs52i0VZScUL753QK5wC_RmAMWIEygF5bBZHr0TywN1LWzMlvbPCyKtnabLihXOQDpA_GX/pub?output=csv';
 const MOON_DISTANCE = 384400; // km from Earth to Moon
 
+// Text sanitization to prevent XSS
+// Really just neutralizes and displays raw text
+function sanitizeText(text) {
+  if (typeof text !== 'string') return '';
+  return text
+    .replace(/[&<>"']/g, (char) => {
+      const entities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;'
+      };
+      return entities[char];
+    })
+    .trim();
+}
+
 function updateProgressBar(largestFill) {
   const progressFill = document.getElementById('progress-fill');
   const distanceCovered = document.getElementById('distance-covered');
@@ -19,7 +37,7 @@ function csvToJSON(csv) {
     const values = line.split(",").map(v => v.trim());
     const entry = {};
     headers.forEach((h, i) => {
-      entry[h] = values[i];
+      entry[h] = sanitizeText(values[i]);
     });
     return entry;
   });
