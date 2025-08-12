@@ -68,7 +68,7 @@ function calculateStats(data) {
     userCounts: {},
     topUser: null,
     topUserCount: 0,
-    largestFill: 0
+    fillsPerWeek: 0
   };
 
   // Count fills per user and find largest fill number
@@ -94,6 +94,43 @@ function calculateStats(data) {
     }
   });
 
+  // Calculate fills per week (last 4 weeks only)
+  if (data.length > 0) {
+    const now = new Date();
+    const fourWeeksAgo = new Date(now.getTime() - (4 * 7 * 24 * 60 * 60 * 1000)); // 4 weeks ago
+    
+    // Filter fills from the last 4 weeks
+    const recentFills = data.filter(entry => {
+      const fillDate = new Date(entry.Timestamp);
+      return !isNaN(fillDate.getTime()) && fillDate >= fourWeeksAgo;
+    });
+    
+    if (recentFills.length > 0) {
+      // Find the highest and lowest bottle numbers from recent fills
+      let highestBottle = 0;
+      let lowestBottle = Infinity;
+      
+      recentFills.forEach(entry => {
+        const fillMatch = entry.SigFill.match(/\d+/);
+        if (fillMatch) {
+          const fillNumber = parseInt(fillMatch[0]);
+          if (fillNumber > highestBottle) {
+            highestBottle = fillNumber;
+          }
+          if (fillNumber < lowestBottle) {
+            lowestBottle = fillNumber;
+          }
+        }
+      });
+      
+      // Calculate bottles filled in last 4 weeks and divide by 4
+      const bottlesFilled = highestBottle - lowestBottle;
+      stats.fillsPerWeek = (bottlesFilled / 4).toFixed(0);
+    } else {
+      stats.fillsPerWeek = '0.0';
+    }
+  }
+
   return stats;
 }
 
@@ -111,6 +148,12 @@ function showStats(data) {
       <div class="stat-title">Most Active Hydrator</div>
       <div class="stat-value">${stats.topUser}</div>
       <div class="stat-detail">${stats.topUserCount} fills logged</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-title">Fills Per Week</div>
+      <div class="stat-value">${stats.fillsPerWeek}</div>
+      <div class="stat-detail">average rate</div>
     </div>
   `;
   
