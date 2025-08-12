@@ -68,6 +68,7 @@ function calculateStats(data) {
     userCounts: {},
     topUser: null,
     topUserCount: 0,
+    largestFill: 0,
     fillsPerWeek: 0
   };
 
