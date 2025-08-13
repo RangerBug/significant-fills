@@ -32,12 +32,20 @@ function updateProgressBar(largestFill) {
 
 function csvToJSON(csv) {
   const lines = csv.split("\n").filter(l => l.trim().length > 0);
-  const headers = lines[0].split(",").map(h => h.trim());
-  return lines.slice(1).map(line => {
-    const values = line.split(",").map(v => v.trim());
+
+  // Replace commas inside double quotes with a placeholder
+  const safeLines = lines.map(line =>
+    line.replace(/"([^"]*)"/g, (match, group) =>
+      `"${group.replace(/,/g, "&#44;")}"`
+    )
+  );
+
+  const headers = safeLines[0].split(",").map(h => h.trim());
+  return safeLines.slice(1).map(line => {
+    const values = line.split(",").map(v => sanitizeText(v.replace(/&#44;/g, ",")));
     const entry = {};
     headers.forEach((h, i) => {
-      entry[h] = sanitizeText(values[i]);
+      entry[h] = values[i] || '';
     });
     return entry;
   });
