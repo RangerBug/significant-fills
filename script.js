@@ -1,5 +1,5 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQm1AXCBhTs52i0VZScUL753QK5wC_RmAMWIEygF5bBZHr0TywN1LWzMlvbPCyKtnabLihXOQDpA_GX/pub?output=csv';
-const MOON_DISTANCE = 384400; // km from Earth to Moon
+const MILKYWAY_DISTANCE = 25800; // Light years from Earth to Center of Milky Way
 
 // Text sanitization to prevent XSS
 // Really just neutralizes and displays raw text
@@ -23,11 +23,11 @@ function updateProgressBar(largestFill) {
   const progressFill = document.getElementById('progress-fill');
   const distanceCovered = document.getElementById('distance-covered');
   
-  const percentage = Math.min((largestFill / MOON_DISTANCE) * 100, 100);
-  const distance = Math.min(largestFill, MOON_DISTANCE);
+  const percentage = Math.min((largestFill / MILKYWAY_DISTANCE) * 100, 100);
+  const distance = Math.min(largestFill, MILKYWAY_DISTANCE);
   
   progressFill.style.width = `${percentage}%`;
-  distanceCovered.textContent = `${distance.toLocaleString()} km`;
+  distanceCovered.textContent = `${distance.toLocaleString()} ly`;
 }
 
 function csvToJSON(csv) {
