@@ -70,6 +70,19 @@ function formatTimestamp(timestamp) {
   }
 }
 
+function mapData(data){
+  // Create a map of usernames to their fills
+  const userMap = {};
+  data.forEach(entry => {
+    const username = entry.Username;
+    if (!userMap[username]) {
+      userMap[username] = [];
+    }
+    userMap[username].push(entry);
+  });
+  return userMap;
+}
+
 function calculateStats(data) {
   const stats = {
     totalFills: data.length,
@@ -134,7 +147,7 @@ function calculateStats(data) {
       
       // Calculate bottles filled in last 4 weeks and divide by 4
       const bottlesFilled = highestBottle - lowestBottle;
-      stats.fillsPerWeek = (bottlesFilled / 4).toFixed(0);
+      stats.fillsPerWeek = (bottlesFilled).toFixed(0);
     } else {
       stats.fillsPerWeek = '0.0';
     }
@@ -210,9 +223,25 @@ function showData(data) {
   showStats(data);
 }
 
+function showLeaderboard(data) {
+  const leaderboardContainer = document.getElementById('leaderboard');
+  const userMap = mapData(data);
+  const leaderboardEntries = Object.entries(userMap)
+    .map(([username, fills]) => ({ username, count: fills.length }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10); // Top 10 users
+  leaderboardContainer.innerHTML = leaderboardEntries.map(entry => `
+    <div class="stat-card">
+      <div class="stat-title">${entry.username}</div>
+      <div class="stat-value">${entry.count}</div>
+    </div>
+  `).join('');
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
   const response = await fetch(csvUrl);
   const text = await response.text();
   const json = csvToJSON(text);
   showData(json);
+  showLeaderboard(json);
 }); 
