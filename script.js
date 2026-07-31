@@ -90,7 +90,7 @@ function calculateStats(data) {
     topUser: null,
     topUserCount: 0,
     largestFill: 0,
-    fillsPerWeek: 0
+    fillsPerMonth: 0
   };
 
   // Count fills per user and find largest fill number
@@ -116,7 +116,7 @@ function calculateStats(data) {
     }
   });
 
-  // Calculate fills per week (last 4 weeks only)
+  // Calculate fills per month
   if (data.length > 0) {
     const now = new Date();
     const fourWeeksAgo = new Date(now.getTime() - (4 * 7 * 24 * 60 * 60 * 1000)); // 4 weeks ago
@@ -147,9 +147,9 @@ function calculateStats(data) {
       
       // Calculate bottles filled in last 4 weeks and divide by 4
       const bottlesFilled = highestBottle - lowestBottle;
-      stats.fillsPerWeek = (bottlesFilled).toFixed(0);
+      stats.fillsPerMonth = (bottlesFilled).toFixed(0);
     } else {
-      stats.fillsPerWeek = '0.0';
+      stats.fillsPerMonth = '0.0';
     }
   }
 
@@ -173,8 +173,8 @@ function showStats(data) {
     </div>
     
     <div class="stat-card">
-      <div class="stat-title">Fills Per Week</div>
-      <div class="stat-value">${stats.fillsPerWeek}</div>
+      <div class="stat-title">Fills Per Month</div>
+      <div class="stat-value">${stats.fillsPerMonth}</div>
       <div class="stat-detail">average rate</div>
     </div>
   `;
