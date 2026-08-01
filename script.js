@@ -92,6 +92,7 @@ function calculateStats(data) {
     largestFill: 0,
     fillsPerWeek: 0
   };
+  userMap = mapData(data);
 
   // Count fills per user and find largest fill number
   data.forEach(entry => {
@@ -146,8 +147,9 @@ function calculateStats(data) {
       });
       
       // Calculate bottles filled in last 4 weeks and divide by 4
+      
       const bottlesFilled = highestBottle - lowestBottle;
-      stats.fillsPerWeek = (bottlesFilled).toFixed(0);
+      stats.fillsPerWeek = parseFloat((recentFills.length/4).toFixed(1)); // Average fills per week
     } else {
       stats.fillsPerWeek = '0.0';
     }
