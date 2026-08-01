@@ -240,10 +240,14 @@ function showLeaderboard(data) {
   `).join('');
 }
 
+function showUserData(data)
+{
+  
+}
 window.addEventListener('DOMContentLoaded', async () => {
   const response = await fetch(csvUrl);
   const text = await response.text();
   const json = csvToJSON(text);
   showData(json);
-  showLeaderboard(json);
+  showLeaderboard(json); 
 }); 
