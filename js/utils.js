@@ -33,6 +33,8 @@ function sanitizeText(text) {
 /**
  * Turns raw CSV text into an array of plain row objects, e.g.
  *   [{ Username: 'Will', SigFill: 'Bottle 42', Comments: '...', Timestamp: '...' }, ...]
+ * Values are NOT sanitized here — that happens later, once, when we build
+ * Entry objects — so this function has exactly one job: parsing.
  */
 function parseCSV(csv) {
   const lines = csv.split('\n').filter(l => l.trim().length > 0);
@@ -97,6 +99,16 @@ function formatTimestamp(timestamp) {
  */
 function usernameKey(username) {
   return (username || '').trim().toLowerCase();
+}
+
+/**
+ * Turns a username into a URL/DOM-id-safe slug, e.g. "Willie T." -> "willie-t".
+ * Used to link a username straight to that person's section on userData.html
+ * (e.g. href="userData.html#user-willie-t").
+ */
+function slugifyUsername(username) {
+  const slug = usernameKey(username).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slug || 'user';
 }
 
 /**

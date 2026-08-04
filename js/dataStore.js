@@ -37,7 +37,13 @@ class FillTracker {
     return this;
   }
 
-  /** Files an Entry under its User, creating the User if needed. */
+  /**
+   * Internal helper: files an Entry under its User, creating the User if
+   * needed. Users are grouped case-insensitively — "Willie" and "willie"
+   * are the same person — but we keep whichever casing was typed *first*
+   * as the display name, so the user data page still shows a normal-looking
+   * name rather than a forced lowercase one.
+   */
   _addEntryToUser(entry) {
     const key = usernameKey(entry.username);
     if (!this.users.has(key)) {
@@ -72,6 +78,11 @@ class FillTracker {
     return this.entries.reduce((max, entry) => Math.max(max, entry.fillNumber), 0);
   }
 
+  /**
+   * Rough "fills per month" rate: the spread between the highest and lowest
+   * bottle numbers logged in the last 4 weeks. (Kept identical to the
+   * original site's logic.)
+   */
   get fillsPerMonth() {
     if (this.entries.length === 0) return '0.0';
 

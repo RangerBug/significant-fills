@@ -33,7 +33,7 @@ function renderLog(tracker) {
     div.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
-          <a class="username-link" href="profile.html?user=${encodeURIComponent(entry.username)}"
+          <a class="username-link" href="userData.html#user-${slugifyUsername(entry.username)}"
              style="color: ${colorForUsername(entry.username)}">${entry.username}</a>
           filled the <em>${entry.sigFill}</em> bottle!${entry.hasComments ? `<br/>📝 "${entry.comments}"` : ''}
           ${renderCategoryBadges(entry)}
@@ -90,7 +90,7 @@ function renderLeaderboard(tracker) {
   const topUsers = tracker.getLeaderboard(10);
 
   leaderboardContainer.innerHTML = topUsers.map(user => `
-    <a class="leaderboard-link" href="profile.html?user=${encodeURIComponent(user.username)}">
+    <a class="leaderboard-link" href="userData.html#user-${slugifyUsername(user.username)}">
       <div class="stat-card" style="border-left-color: ${user.color}">
         <div class="stat-title">${user.username}</div>
         <div class="stat-value">${user.totalFills}</div>

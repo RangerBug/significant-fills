@@ -65,10 +65,8 @@ function renderAllUsers(tracker, container) {
   }
 
   container.innerHTML = users.map(user => `
-    <div class="user-section">
-      <h3>
-        <a href="profile.html?user=${encodeURIComponent(user.username)}" style="color: ${user.color}">${user.username}</a>
-      </h3>
+    <div class="user-section" id="user-${slugifyUsername(user.username)}">
+      <h3 style="color: ${user.color}">${user.username}</h3>
       <div class="user-summary">
         ${user.totalFills} fill${user.totalFills === 1 ? '' : 's'} &middot; ${user.totalScore} pt${user.totalScore === 1 ? '' : 's'}
       </div>
