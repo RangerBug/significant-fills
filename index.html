@@ -23,7 +23,7 @@
     <h2 style="margin-top: 3rem;">📊 Fill Statistics</h2>
     <div id="stats">
     </div>
-    
+
     <div class="progress-section">
       <div class="progress-container">
         <div class="stat-title">🚀 Earth to the Center of the Milky Way Progress</div>
@@ -49,7 +49,7 @@
   <div class="leaderboard">
     <h2 style="margin-top: 3rem;">🏆 Leaderboard</h2>
     <div id="leaderboard">
-      
+
     </div>
   </div>
 
@@ -63,8 +63,12 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
-  
+  <!-- Load order matters: utils and models have no dependencies, dataStore
+       depends on both, and main.js depends on all three. -->
+  <script src="js/utils.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/dataStore.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>

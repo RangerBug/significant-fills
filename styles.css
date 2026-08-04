@@ -172,10 +172,6 @@ a:hover {
   margin-top: 0;
 }
 
-
-
-
-
 .progress-container {
   background-color: #1A1F2A;
   border-radius: 8px;
@@ -228,6 +224,59 @@ a:hover {
   margin-top: 5px;
 }
 
- .leaderboard {
+.leaderboard {
   margin-top: 40px;
- }
+}
+
+/* --- New: username links inside entries (index page) --- */
+.username-link {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.username-link:hover {
+  text-decoration: underline;
+}
+
+/* --- New: leaderboard cards are now links to profile.html --- */
+.leaderboard-link {
+  display: block;
+  text-decoration: none;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.15s ease;
+}
+
+.leaderboard-link:hover {
+  transform: translateY(-2px);
+}
+
+.leaderboard-link .stat-card {
+  margin: 10px auto;
+}
+
+/* --- New: profile page --- */
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.profile-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+}
+
+.profile-stats .stat-card {
+  flex: 1 1 150px;
+  margin: 0;
+}
+
+#profile-log .entry {
+  text-align: left;
+}
