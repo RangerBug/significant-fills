@@ -18,6 +18,7 @@ async function init() {
 
     renderUserStats(tracker, statsContainer);
     renderAllUsers(tracker, dataContainer);
+    scrollToRequestedUser();
   } catch (error) {
     if (dataContainer) {
       dataContainer.innerHTML = `
@@ -91,3 +92,26 @@ function renderAllUsers(tracker, container) {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+/**
+ * Scrolls to the user's section named in the URL hash (e.g. arriving at
+ * userData.html#user-willie from a link on the homepage).
+ *
+ * This has to happen manually, after renderAllUsers() runs, because the
+ * user list is built from data fetched over the network — the target
+ * element doesn't exist yet at the moment the page first loads, so the
+ * browser's automatic "jump to #hash" behavior has nothing to jump to.
+ */
+function scrollToRequestedUser() {
+  const hash = window.location.hash; // e.g. "#user-willie"
+  if (!hash) return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Briefly highlight the section so it's obvious where the scroll landed.
+  target.classList.add('highlight');
+  setTimeout(() => target.classList.remove('highlight'), 2000);
+}

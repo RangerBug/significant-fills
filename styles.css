@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: #101820;
@@ -228,6 +232,7 @@ a:hover {
   margin-top: 40px;
 }
 
+/* --- New: username links inside entries (index page) --- */
 .username-link {
   font-weight: bold;
   text-decoration: none;
@@ -237,6 +242,7 @@ a:hover {
   text-decoration: underline;
 }
 
+/* --- New: leaderboard cards are now links to profile.html --- */
 .leaderboard-link {
   display: block;
   text-decoration: none;
@@ -254,6 +260,7 @@ a:hover {
   margin: 10px auto;
 }
 
+/* --- New: category badges (palindrome, milestone, etc.) --- */
 .category-badges {
   margin-top: 6px;
   font-size: 0.75rem;
@@ -284,6 +291,7 @@ a:hover {
   margin-top: 4px;
 }
 
+/* --- New: userData.html (all-users overview page) --- */
 .button-row {
   margin-top: 1.5rem;
 }
@@ -322,4 +330,22 @@ a:hover {
 
 .user-fills .entry:first-child {
   margin-top: 0;
+}
+
+/* Brief highlight shown when a link scrolls the page to a specific user
+   (e.g. clicking a username on the homepage). Fades out on its own. */
+.user-section.highlight {
+  animation: highlight-fade 4s ease-out;
+  border-radius: 8px;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: rgba(78, 205, 196, 0.15);
+    box-shadow: 0 0 0 2px #4ECDC4;
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 2px transparent;
+  }
 }
