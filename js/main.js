@@ -36,6 +36,7 @@ function renderLog(tracker) {
           <a class="username-link" href="profile.html?user=${encodeURIComponent(entry.username)}"
              style="color: ${colorForUsername(entry.username)}">${entry.username}</a>
           filled the <em>${entry.sigFill}</em> bottle!${entry.hasComments ? `<br/>📝 "${entry.comments}"` : ''}
+          ${renderCategoryBadges(entry)}
         </div>
         ${entry.formattedTimestamp ? `<div style="color: #888; font-size: 0.8rem; margin-left: 10px;">${entry.formattedTimestamp}</div>` : ''}
       </div>

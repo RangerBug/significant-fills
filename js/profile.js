@@ -62,6 +62,7 @@ function renderProfileLog(user, log) {
       <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
           filled the <em>${entry.sigFill}</em> bottle!${entry.hasComments ? `<br/>📝 "${entry.comments}"` : ''}
+          ${renderCategoryBadges(entry)}
         </div>
         ${entry.formattedTimestamp ? `<div style="color: #888; font-size: 0.8rem; margin-left: 10px;">${entry.formattedTimestamp}</div>` : ''}
       </div>

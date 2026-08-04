@@ -280,3 +280,25 @@ a:hover {
 #profile-log .entry {
   text-align: left;
 }
+
+.category-badges {
+  margin-top: 6px;
+  font-size: 0.75rem;
+}
+
+.category-badge {
+  display: inline-block;
+  background-color: #0F1419;
+  color: #4ECDC4;
+  border: 1px solid #4ECDC4;
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-right: 4px;
+  font-weight: bold;
+  letter-spacing: 0.3px;
+}
+
+.category-bonus {
+  color: #FFEAA7;
+  font-weight: bold;
+}

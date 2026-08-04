@@ -31,9 +31,19 @@ class Entry {
     return match ? parseInt(match[0], 10) : 0;
   }
 
-  /** Every fill is worth 1 point, plus likes/bonuses, once those exist. */
+  /** Every fill is worth 1 point, plus likes, category bonuses, and any manual bonus. */
   get score() {
-    return 1 + this.likes + this.bonusScore;
+    return 1 + this.likes + this.bonusScore + this.categoryBonus;
+  }
+
+  /** Special-number categories this fill qualifies for (palindrome, milestone, etc). See scoring.js. */
+  get matchedCategories() {
+    return getMatchedCategories(this.fillNumber);
+  }
+
+  /** The bonus points earned from matched categories. See scoring.js for the formula. */
+  get categoryBonus() {
+    return calculateCategoryBonus(this.fillNumber);
   }
 
   get hasComments() {

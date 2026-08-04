@@ -57,6 +57,22 @@ function parseCSV(csv) {
 }
 
 /**
+ * Builds the little badge row shown under an entry when its fill number
+ * matched one or more scoring categories (see scoring.js). Returns '' if
+ * the entry didn't match anything, so callers can drop it straight into
+ * a template string.
+ */
+function renderCategoryBadges(entry) {
+  if (entry.matchedCategories.length === 0) return '';
+
+  const badges = entry.matchedCategories
+    .map(category => `<span class="category-badge">${category.label}</span>`)
+    .join('');
+
+  return `<div class="category-badges">${badges} <span class="category-bonus">+${entry.categoryBonus} bonus</span></div>`;
+}
+
+/**
  * Formats an ISO-ish timestamp string into something readable, e.g. "Aug 3, 2:14 PM".
  * Returns '' if the timestamp is missing or unparseable.
  */
@@ -83,7 +99,11 @@ function usernameKey(username) {
   return (username || '').trim().toLowerCase();
 }
 
-/** Deterministically maps a username to a color from USERNAME_COLORS. */
+/**
+ * Deterministically maps a username to a color from USERNAME_COLORS.
+ * Same username -> same color, every time, on every page — regardless of
+ * capitalization, since it's hashed via usernameKey.
+ */
 function colorForUsername(username) {
   const key = usernameKey(username);
   let hash = 0;
