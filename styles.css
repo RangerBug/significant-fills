@@ -302,3 +302,11 @@ a:hover {
   color: #FFEAA7;
   font-weight: bold;
 }
+
+.entry-score {
+  color: #C0FFB3;
+  font-weight: bold;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin-top: 4px;
+}

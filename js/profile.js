@@ -64,7 +64,10 @@ function renderProfileLog(user, log) {
           filled the <em>${entry.sigFill}</em> bottle!${entry.hasComments ? `<br/>📝 "${entry.comments}"` : ''}
           ${renderCategoryBadges(entry)}
         </div>
-        ${entry.formattedTimestamp ? `<div style="color: #888; font-size: 0.8rem; margin-left: 10px;">${entry.formattedTimestamp}</div>` : ''}
+        <div style="text-align: right;">
+          ${entry.formattedTimestamp ? `<div style="color: #888; font-size: 0.8rem;">${entry.formattedTimestamp}</div>` : ''}
+          <div class="entry-score">${entry.score} pt${entry.score === 1 ? '' : 's'}</div>
+        </div>
       </div>
     </div>
   `).join('');
