@@ -22,9 +22,6 @@
  *   label  - human-readable name shown in the UI (e.g. as a little badge)
  *   points - the base point value this category is worth
  *   test   - given a fill number, returns true if it qualifies
- *
- * To add a category later: add an object here. Nothing in models.js,
- * main.js, or profile.js needs to know how the test works.
  */
 const SCORE_CATEGORIES = [
   {
