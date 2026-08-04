@@ -22,6 +22,8 @@ function sanitizeText(text) {
 function updateProgressBar(largestFill) {
   const progressFill = document.getElementById('progress-fill');
   const distanceCovered = document.getElementById('distance-covered');
+
+  if (!progressFill || !distanceCovered) return;
   
   const percentage = Math.min((largestFill / MILKYWAY_DISTANCE) * 100, 100);
   const distance = Math.min(largestFill, MILKYWAY_DISTANCE);
@@ -146,6 +148,7 @@ function calculateStats(data) {
       });
       
       // Calculate bottles filled in last 4 weeks and divide by 4
+      
       const bottlesFilled = highestBottle - lowestBottle;
       stats.fillsPerMonth = (bottlesFilled).toFixed(0);
     } else {
@@ -158,6 +161,8 @@ function calculateStats(data) {
 
 function showStats(data) {
   const statsContainer = document.getElementById('stats');
+  if (!statsContainer) return;
+
   const stats = calculateStats(data);
   
   statsContainer.innerHTML = `
@@ -185,6 +190,8 @@ function showStats(data) {
 
 function showData(data) {
   const log = document.getElementById('log');
+  if (!log) return;
+
   log.innerHTML = '';
 
   // Create a color map for usernames
@@ -225,6 +232,8 @@ function showData(data) {
 
 function showLeaderboard(data) {
   const leaderboardContainer = document.getElementById('leaderboard');
+  if (!leaderboardContainer) return;
+
   const userMap = mapData(data);
   const leaderboardEntries = Object.entries(userMap)
     .map(([username, fills]) => ({ username, count: fills.length }))
@@ -238,10 +247,40 @@ function showLeaderboard(data) {
   `).join('');
 }
 
+function showUserData(data) {
+  const container = document.getElementById('user-data');
+  if (!container) return;
+
+  const userMap = mapData(data);
+  container.innerHTML = Object.entries(userMap)
+    .map(([user, fills]) => `
+      <div class="user-section">
+        <h3>${sanitizeText(user)}</h3>
+        <div class="user-fills">
+          ${fills.map(entry => `
+            <div class="entry">
+              <strong>${sanitizeText(entry.SigFill)}</strong> - ${formatTimestamp(entry.Timestamp)}${entry.Comments ? `<br/>📝 "${sanitizeText(entry.Comments)}"` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `)
+    .join('');
+}
 window.addEventListener('DOMContentLoaded', async () => {
-  const response = await fetch(csvUrl);
-  const text = await response.text();
-  const json = csvToJSON(text);
-  showData(json);
-  showLeaderboard(json);
-}); 
+  try {
+    const response = await fetch(csvUrl);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const text = await response.text();
+    const json = csvToJSON(text);
+    showData(json);
+    showLeaderboard(json);
+    showUserData(json);
+  } catch (error) {
+    const fallback = document.getElementById('user-data');
+    if (fallback) {
+      fallback.innerHTML = '<div class="stat-card"><div class="stat-title">Could not load data</div><div class="stat-detail">The fill sheet is unavailable right now. Please try again shortly.</div></div>';
+    }
+  }
+});
