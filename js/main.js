@@ -87,13 +87,14 @@ function updateProgressBar(largestFill) {
 
 function renderLeaderboard(tracker) {
   const leaderboardContainer = document.getElementById('leaderboard');
-  const topUsers = tracker.getLeaderboard(10);
+  const topUsers = tracker.getLeaderboard(10, 'score');
 
   leaderboardContainer.innerHTML = topUsers.map(user => `
     <a class="leaderboard-link" href="userData.html#user-${slugifyUsername(user.username)}">
       <div class="stat-card" style="border-left-color: ${user.color}">
         <div class="stat-title">${user.username}</div>
-        <div class="stat-value">${user.totalFills}</div>
+        <div class="stat-value">${user.totalScore} pt${user.totalScore === 1 ? '' : 's'}</div>
+        <div class="stat-detail">${user.totalFills} fill${user.totalFills === 1 ? '' : 's'}</div>
       </div>
     </a>
   `).join('');

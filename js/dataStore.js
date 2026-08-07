@@ -62,10 +62,18 @@ class FillTracker {
     return [...this.users.values()];
   }
 
-  /** Top N users by fill count, descending. */
-  getLeaderboard(limit = 10) {
+  /**
+   * Top N users, descending, ranked by `sortBy`:
+   *   'fills' (default) - most fills logged, for "most active hydrator" style stats
+   *   'score'            - highest total score (fills + category bonuses), for the leaderboard
+   */
+  getLeaderboard(limit = 10, sortBy = 'fills') {
+    const compareBy = sortBy === 'score'
+      ? (a, b) => b.totalScore - a.totalScore
+      : (a, b) => b.totalFills - a.totalFills;
+
     return this.getAllUsers()
-      .sort((a, b) => b.totalFills - a.totalFills)
+      .sort(compareBy)
       .slice(0, limit);
   }
 
