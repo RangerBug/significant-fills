@@ -17,6 +17,24 @@
 // ---------------------------------------------------------------------------
 
 /**
+| Category                        | Approx. Count (10k–20k) | Odds       |               Score | Notes                  |
+| ------------------------------- | ----------------------: | ---------- | ------------------: | ---------------------- |
+| Prime                           |                   ~1030 | 1 in 10    |               **5** | Common bonus           |
+| Sum of digits = 25              |             ~550 (est.) | 1 in 18    |               **6** | Nice little bonus      |
+| Contains three identical digits |                    ~350 | 1 in 29    |               **8** | e.g. 11123, 17771      |
+| Palindrome                      |                     100 | 1 in 100   |              **10** | Instantly recognizable |
+| Perfect square                  |                      42 | 1 in 238   |              **15** | Mathematical milestone |
+| All digits unique               |                   ~3000 | 1 in 3     | **Not recommended** | Too common             |
+| Cube number                     |                       6 | 1 in 1667  |              **25** | 22³–27³                |
+| Thousand milestone              |                      10 | 1 in 1000  |              **30** | 10000, 11000, …        |
+| Triangular number               |                     ~31 | 1 in 323   |              **30** | Nice hidden pattern    |
+| Repdigit                        |                       1 | 1 in 10000 |              **60** | Only **11111**         |
+| Sequential digits               |                       1 | 1 in 10000 |              **75** | Only **12345**         |
+| Fibonacci                       |                       1 | 1 in 10000 |              **90** | **10946**              |
+| Power of 2                      |                       1 | 1 in 10000 |             **100** | **16384**              |
+*/
+
+/**
  * Each rule is: { id, label, points, test(n) -> boolean }
  *   id     - stable short key (used in code, not shown to users)
  *   label  - human-readable name shown in the UI (e.g. as a little badge)
@@ -27,14 +45,32 @@ const SCORE_CATEGORIES = [
   {
     id: 'palindrome',
     label: 'Palindrome',
-    points: 5,
+    points: 10,
     test: (n) => isPalindrome(n)
   },
   {
-    id: 'milestone-1000',
-    label: 'Milestone',
-    points: 10,
+    id: 'thousand-milestone',
+    label: 'Thousand Milestone',
+    points: 40,
     test: (n) => n > 0 && n % 1000 === 0
+  },
+  {
+    id: 'prime',
+    label: 'Prime',
+    points: 5,
+    test: (n) => isPrime(n)
+  },
+  {
+    id: 'power-of-two',
+    label: 'Power of 2',
+    points: 100,
+    test: (n) => n > 0 && (n & (n - 1)) === 0
+  },
+  {
+    id: 'fibonacci',
+    label: 'Fibonacci',
+    points: 90,
+    test: (n) => isFibonacci(n)
   }
 ];
 
@@ -42,6 +78,35 @@ const SCORE_CATEGORIES = [
 function isPalindrome(n) {
   const str = String(n);
   return str === str.split('').reverse().join('');
+}
+
+function isPrime(num) {
+  if (num <= 1) return false;
+  if (num === 2) return true;
+  if (num % 2 === 0) return false;
+
+  const limit = Math.sqrt(num);
+  for (let i = 3; i <= limit; i += 2) {
+    if (num % i === 0) return false; 
+  }
+  
+  return true;
+}
+
+function isFibonacci(n) {
+    if (n < 0) return false;
+    if (n === 0 || n === 1) return true;
+
+    let a = 0;
+    let b = 1;
+    
+    while (b < n) {
+        let temp = a + b;
+        a = b;
+        b = temp;
+    }
+    
+    return b === n;
 }
 
 /** All categories a given fill number qualifies for. */
